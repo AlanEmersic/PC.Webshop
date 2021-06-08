@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PC.Webshop.Model
 {
@@ -11,6 +12,6 @@ namespace PC.Webshop.Model
         //[Required]
         //public AppUser User { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }        
     }
 }

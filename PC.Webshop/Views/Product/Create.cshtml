@@ -1,0 +1,20 @@
+﻿@model PC.Webshop.Model.Product
+
+@{
+    ViewData["Title"] = "Dodavanje novog klijenta";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Naslovna stranica</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Novi proizvod</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <partial name="_CreateOrEdit" />
+        </form>
+    </div>
+</div>

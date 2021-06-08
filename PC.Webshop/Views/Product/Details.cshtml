@@ -1,0 +1,76 @@
+﻿@model PC.Webshop.Model.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+@if (Model != null)
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Popis proizvoda</a></li>
+        <li class="breadcrumb-item active">@Model.Name</li>
+    </ol>
+
+    <div class="col-md-4">
+        <h4>Proizvod</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                ID
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ID)
+            </dd>
+            <dt>
+                Naziv
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                Brand
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
+            <dt>
+                Kategorija
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Category)
+            </dd>
+            <dt>
+                Opis
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                Serijski broj
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SerialNumber)
+            </dd>
+            <dt>
+                Cijena
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+        </dl>
+
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">Uredi</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        Nije odabran ispravni ID proizvoda.
+    </div>
+
+}
+

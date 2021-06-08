@@ -25,9 +25,5 @@ namespace PC.Webshop.Model
         [ForeignKey(nameof(Category))]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
-
-        [ForeignKey(nameof(Cart))]
-        public int? CartId { get; set; }
-        public Cart Cart { get; set; }
     }
 }

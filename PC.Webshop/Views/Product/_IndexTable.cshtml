@@ -1,0 +1,37 @@
+﻿@using PC.Webshop.Model
+@model List<Product>
+
+<table style="margin-top: 20px;" class="table table-condensed" id="table">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Brand</th>
+            <th>Opis</th>
+            <th>Cijena</th>
+            <th>Serijski broj</th>
+            <th>Kategorija</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">@item.Name</a>
+                </td>
+                <td>@item.Brand</td>
+                <td>@item.Description</td>
+                <td>@item.Price kn</td>
+                <td>@item.SerialNumber</td>
+                <td>@item.Category?.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">[edit]</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete",new { item.ID})">[delete]</a>
+                </td>
+            </tr>
+        }        
+    </tbody>
+</table>
