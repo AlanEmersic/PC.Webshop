@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PC.Webshop.Model
 {
@@ -12,10 +7,16 @@ namespace PC.Webshop.Model
         [Key]
         public int ID { get; set; }
 
+        [Required]
+        [MinLength(3, ErrorMessage = "Unesite barem 3 znaka")]
         public string Username { get; set; }
 
+        [Required]
+        [MinLength(5, ErrorMessage = "Unesite barem 5 znaka")]
         public string Password { get; set; }
 
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }

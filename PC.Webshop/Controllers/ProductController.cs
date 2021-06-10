@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PC.Webshop.DAL;
+using PC.Webshop.Model;
+using PC.Webshop.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PC.Webshop.DAL;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using PC.Webshop.Model;
-using Microsoft.EntityFrameworkCore;
-using PC.Webshop.Web.Models;
 
 namespace PC.Webshop.Web.Controllers
 {
@@ -76,7 +75,7 @@ namespace PC.Webshop.Web.Controllers
             //var userId = userManager.GetUserId(User);
 
             var model = dbContext.Products.FirstOrDefault(p => p.ID == id);
-            this.FillDropdownValues();
+            FillDropdownValues();
             return View(model);
         }
 
@@ -88,9 +87,9 @@ namespace PC.Webshop.Web.Controllers
             //var userId = userManager.GetUserId(User);
 
             var product = dbContext.Products.FirstOrDefault(p => p.ID == id);
-            var ok = await this.TryUpdateModelAsync(product);
+            var ok = await TryUpdateModelAsync(product);
 
-            if (ok && this.ModelState.IsValid)
+            if (ok && ModelState.IsValid)
             {
                 //product.UpdatedById = userId;
                 dbContext.SaveChanges();

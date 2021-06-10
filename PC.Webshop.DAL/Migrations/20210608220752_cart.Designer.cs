@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC.Webshop.DAL;
 
 namespace PC.Webshop.DAL.Migrations
 {
     [DbContext(typeof(WebshopDbContext))]
-    partial class WebshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608220752_cart")]
+    partial class cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,12 +28,7 @@ namespace PC.Webshop.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Carts");
                 });
@@ -46,7 +43,7 @@ namespace PC.Webshop.DAL.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartId")
+                    b.Property<int?>("CartID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -54,7 +51,7 @@ namespace PC.Webshop.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("CartID");
 
                     b.HasIndex("ProductId");
 
@@ -75,30 +72,6 @@ namespace PC.Webshop.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("PC.Webshop.Model.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("PC.Webshop.Model.Product", b =>
@@ -136,28 +109,15 @@ namespace PC.Webshop.DAL.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("PC.Webshop.Model.Cart", b =>
-                {
-                    b.HasOne("PC.Webshop.Model.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("PC.Webshop.Model.CartItem", b =>
                 {
-                    b.HasOne("PC.Webshop.Model.Cart", "Cart")
+                    b.HasOne("PC.Webshop.Model.Cart", null)
                         .WithMany("CartItems")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartID");
 
                     b.HasOne("PC.Webshop.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

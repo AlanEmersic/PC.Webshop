@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PC.Webshop.DAL;
 
 namespace PC.Webshop.DAL.Migrations
 {
     [DbContext(typeof(WebshopDbContext))]
-    partial class WebshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210609131353_customer")]
+    partial class customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace PC.Webshop.DAL.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartId")
+                    b.Property<int?>("CartID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -54,7 +56,7 @@ namespace PC.Webshop.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("CartID");
 
                     b.HasIndex("ProductId");
 
@@ -149,15 +151,13 @@ namespace PC.Webshop.DAL.Migrations
 
             modelBuilder.Entity("PC.Webshop.Model.CartItem", b =>
                 {
-                    b.HasOne("PC.Webshop.Model.Cart", "Cart")
+                    b.HasOne("PC.Webshop.Model.Cart", null)
                         .WithMany("CartItems")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartID");
 
                     b.HasOne("PC.Webshop.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

@@ -1,0 +1,47 @@
+﻿@using PC.Webshop.Model
+@model Cart
+
+@{
+    ViewData["Title"] = "Košarica";
+}
+
+
+<table style="margin-top: 20px;" class="table table-condensed" id="table">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Brand</th>
+            <th>Opis</th>
+            <th>Cijena</th>
+            <th>Serijski broj</th>
+            <th>Kategorija</th>
+            <th>Količina</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model?.CartItems != null)
+        {
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>
+                        @item.Product.Name
+                    </td>
+                    <td>@item.Product.Brand</td>
+                    <td>@item.Product.Description</td>
+                    <td>@item.Product.Price kn</td>
+                    <td>@item.Product.SerialNumber</td>
+                    <td>@item.Product.Category?.Name</td>
+                    <td>@item.Amount</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">[edit]</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.ID">[delete]</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

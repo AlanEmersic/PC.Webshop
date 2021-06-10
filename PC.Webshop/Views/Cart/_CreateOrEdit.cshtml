@@ -1,0 +1,22 @@
+﻿@model PC.Webshop.Model.CartItem
+
+<div class="form-group">
+    <label class="control-label">Količina</label>
+    <input asp-for="Amount" class="form-control" />
+    <span asp-validation-for="Amount" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="control-label">Naziv</label>
+    <div>@Model.Product.Name</div>
+</div>
+<div class="form-group">
+    <label class="control-label">Brand</label>
+    <div>@Model.Product.Brand</div>  
+</div>
+<div class="form-group">
+    <label class="control-label">Cijena</label>
+    <div>@Model.Product.Price</div>
+</div>
+<div class="form-group">
+    <input type="submit" value="Spremi" class="btn btn-outline-success" />
+</div>
