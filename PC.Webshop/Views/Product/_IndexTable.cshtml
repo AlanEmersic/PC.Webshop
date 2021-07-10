@@ -18,28 +18,26 @@
                             <h5 class="card-title" style="width: fit-content;">@item.Name</h5>
                         </a>
                         <p class="card-text text-center"><b>@item.Price kn</b></p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
-                <!-- <button class="btn btn-warning mt-3 mr-3" (click)="editProduct(product)" *ngIf="isRoleSales()">Update</button> -->
-                <!-- <button class="btn btn-danger mt-3" (click)="deleteProduct(product)" *ngIf="isRoleSales()">Delete</button>         -->
+                <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
             </li>
         }
         else if (selected == null)
         {
             <li class="list-group-item m-2 bg-dark rounded">
-                <div class="card" style="width: 14rem">
+                <div class="card" style="width: 14rem;">
                     <img class="card-img-top" src="@item.Img" alt="image">
                     <div class="card-body">
                         <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
                             <h5 class="card-title" style="width: fit-content;">@item.Name</h5>
                         </a>
                         <p class="card-text text-center"><b>@item.Price kn</b></p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
-                <!-- <button class="btn btn-warning mt-3 mr-3" (click)="editProduct(product)" *ngIf="isRoleSales()">Update</button> -->
-                <!-- <button class="btn btn-danger mt-3" (click)="deleteProduct(product)" *ngIf="isRoleSales()">Delete</button>         -->
+                <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
             </li>
         }
 
