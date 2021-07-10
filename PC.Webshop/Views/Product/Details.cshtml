@@ -16,12 +16,9 @@
     <div class="col-md-4">
         <h4>Proizvod</h4>
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                ID
-            </dt>
+        <dl class="dl-horizontal">            
             <dd>
-                @Html.DisplayFor(model => model.ID)
+                <img src="@Model.Img"/>
             </dd>
             <dt>
                 Naziv
@@ -39,7 +36,7 @@
                 Kategorija
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Category)
+                @Html.DisplayFor(model => model.Category.Name)
             </dd>
             <dt>
                 Opis
@@ -57,7 +54,7 @@
                 Cijena
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Price)
+                @Html.DisplayFor(model => model.Price) kn
             </dd>
         </dl>
 

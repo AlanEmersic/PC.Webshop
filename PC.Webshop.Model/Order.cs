@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PC.Webshop.Model
 {
@@ -14,5 +11,8 @@ namespace PC.Webshop.Model
 
         public DateTime OrderDate { get; set; }
 
+        [ForeignKey(nameof(Cart))]
+        public int CartId { get; set; }
+        public Cart Cart { get; set; }
     }
 }

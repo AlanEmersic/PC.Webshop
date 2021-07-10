@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PC.Webshop.Model
@@ -20,10 +21,15 @@ namespace PC.Webshop.Model
         [Required]
         public float Price { get; set; }
 
+        [Required]
         public string SerialNumber { get; set; }
+
+        public string Img { get; set; }
 
         [ForeignKey(nameof(Category))]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }

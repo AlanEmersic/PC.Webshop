@@ -7,15 +7,13 @@ namespace PC.Webshop.Model
     public class Cart
     {
         [Key]
-        public int ID { get; set; }
-
-        //[Required]
-        //public AppUser User { get; set; }
+        public int ID { get; set; }        
 
         [ForeignKey(nameof(Customer))]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public virtual ICollection<CartItem> CartItems { get; set; }        
+        public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

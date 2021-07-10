@@ -1,37 +1,47 @@
 ﻿@using PC.Webshop.Model
 @model List<Product>
 
-<table style="margin-top: 20px;" class="table table-condensed" id="table">
-    <thead>
-        <tr>
-            <th>Naziv</th>
-            <th>Brand</th>
-            <th>Opis</th>
-            <th>Cijena</th>
-            <th>Serijski broj</th>
-            <th>Kategorija</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+@{
+    var selected = ViewData["selected"];
+}
+
+<ul class="brands list-group list-group-horizontal row">
+    @foreach (var item in Model)
+    {
+        if (selected != null && item.Category.Name == (string)selected)
         {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ID">@item.Name</a>
-                </td>
-                <td>@item.Brand</td>
-                <td>@item.Description</td>
-                <td>@item.Price kn</td>
-                <td>@item.SerialNumber</td>
-                <td>@item.Category?.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">[edit]</a>
-                </td>
-                <td>
-                    <a href="@Url.Action("Delete",new { item.ID})">[delete]</a>
-                </td>
-            </tr>
-        }        
-    </tbody>
-</table>
+            <li class="list-group-item m-2 bg-dark rounded">
+                <div class="card" style="width: 14rem">
+                    <img class="card-img-top" src="@item.Img" alt="image">
+                    <div class="card-body">
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                            <h5 class="card-title" style="width: fit-content;">@item.Name</h5>
+                        </a>
+                        <p class="card-text text-center"><b>@item.Price kn</b></p>
+                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    </div>
+                </div>
+                <!-- <button class="btn btn-warning mt-3 mr-3" (click)="editProduct(product)" *ngIf="isRoleSales()">Update</button> -->
+                <!-- <button class="btn btn-danger mt-3" (click)="deleteProduct(product)" *ngIf="isRoleSales()">Delete</button>         -->
+            </li>
+        }
+        else if (selected == null)
+        {
+            <li class="list-group-item m-2 bg-dark rounded">
+                <div class="card" style="width: 14rem">
+                    <img class="card-img-top" src="@item.Img" alt="image">
+                    <div class="card-body">
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                            <h5 class="card-title" style="width: fit-content;">@item.Name</h5>
+                        </a>
+                        <p class="card-text text-center"><b>@item.Price kn</b></p>
+                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    </div>
+                </div>
+                <!-- <button class="btn btn-warning mt-3 mr-3" (click)="editProduct(product)" *ngIf="isRoleSales()">Update</button> -->
+                <!-- <button class="btn btn-danger mt-3" (click)="deleteProduct(product)" *ngIf="isRoleSales()">Delete</button>         -->
+            </li>
+        }
+
+    }
+</ul>

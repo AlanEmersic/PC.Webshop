@@ -18,5 +18,7 @@ namespace PC.Webshop.Model
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public virtual Cart Cart { get; set; }
     }
 }
