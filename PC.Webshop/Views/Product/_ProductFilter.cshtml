@@ -1,14 +1,13 @@
 ﻿@using PC.Webshop.Web.Models
 
 @model ProductFilterModel
-
-<form action="@Url.Action("Index")" method="post">
+<form method="post" id="table">
     <div class="form-row">
         <div class="col-3">
             <input asp-for="Name" class="form-control" type="text" placeholder="Pretraži proizvod" />
         </div>
-        <div class="col-2">
-            <button type="submit" class="btn btn-outline-info">Pretraga</button>
+        <div class="col-2">            
+            <button type="button" class="btn btn-outline-info" onclick="onFilter();">Pretraga</button>
             <a asp-action="Create" class="btn btn-success">Novi</a>
         </div>
     </div>

@@ -19,21 +19,31 @@ namespace PC.Webshop.Web.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index(ProductFilterModel filter, string selected = null)
+        public IActionResult Index(string selected = null)
         {
             ViewData["selected"] = selected;
-            //var query = dbContext.Products.Include(c => c.Category).AsQueryable();
-            var query = dbContext.Products.Include(c => c.Category).Where(c => c.ID > 0).AsQueryable();
 
+            var query = dbContext.Products.Include(c => c.Category).Where(c => c.ID > 0).AsQueryable();
+            var model = query.ToList();
+            return View(nameof(Index), model);            
+        }
+
+        [HttpPost]
+        public IActionResult IndexAjax(ProductFilterModel filter, string selected = null)
+        {
+            ViewData["selected"] = selected;
+
+            var query = dbContext.Products.Include(c => c.Category).Where(c => c.ID > 0).AsQueryable();
             filter ??= new ProductFilterModel();
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
                 query = query.Where(p => p.Name.ToLower().Contains(filter.Name.ToLower()));
 
-            var model = query.ToList();
-            return View(nameof(Index), model);
+            var model = query.ToList();                        
+
+            return PartialView("_IndexTable", model);
         }
-        
+
         public IActionResult Details(int? id = null)
         {
             var product = dbContext.Products.Include(c => c.Category)

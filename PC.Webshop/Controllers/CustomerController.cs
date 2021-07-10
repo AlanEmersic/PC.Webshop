@@ -16,13 +16,13 @@ namespace PC.Webshop.Web.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index(int? id = null)
-        {
-            id = 1;
-            var customer = dbContext.Customers
-                .Where(c => c.ID == id).FirstOrDefault();
+        //public IActionResult Index(string id = null)
+        //{
+        //    //id = 1;
+        //    //var customer = dbContext.Customers
+        //    //    .Where(c => c.ID == id).FirstOrDefault();
 
-            return View("Index", customer);
-        }
+        //    return View("Index", customer);
+        //}
     }
 }

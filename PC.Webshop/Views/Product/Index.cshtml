@@ -42,5 +42,24 @@
 </div>
 
 <div id="table-container">
-    <partial name="_IndexTable" model="Model" />
+    <partial name="_IndexTable" model="@Model" />
 </div>
+
+@section scripts{
+    <script>
+        function onFilter() {
+            $('#table').on('click', function (e) {
+                e.preventDefault();
+                var dataToPost = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("IndexAjax")',
+                    data: dataToPost,
+                    success: function (html) {
+                        $("#table-container").html(html);
+                    }
+                });
+            });
+        }
+    </script>
+}

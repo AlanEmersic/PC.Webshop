@@ -5,7 +5,7 @@
     var selected = ViewData["selected"];
 }
 
-<ul class="brands list-group list-group-horizontal row">
+<ul class="list-group list-group-horizontal row">
     @foreach (var item in Model)
     {
         if (selected != null && item.Category.Name == (string)selected)

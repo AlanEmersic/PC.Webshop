@@ -10,7 +10,7 @@ namespace PC.Webshop.Model
         public int ID { get; set; }        
 
         [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         public virtual ICollection<CartItem> CartItems { get; set; }

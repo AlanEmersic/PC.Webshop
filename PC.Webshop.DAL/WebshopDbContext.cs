@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PC.Webshop.Model;
 
 namespace PC.Webshop.DAL
 {
-    public class WebshopDbContext : DbContext
+    public class WebshopDbContext : IdentityDbContext<Customer>
     {
         public WebshopDbContext(DbContextOptions<WebshopDbContext> options)
            : base(options)

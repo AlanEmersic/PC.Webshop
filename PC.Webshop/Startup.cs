@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PC.Webshop.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace PC.Webshop
 {
@@ -25,11 +27,15 @@ namespace PC.Webshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();  
+
             services.AddDbContext<WebshopDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("WebshopDbContext")));
 
-            services.AddControllersWithViews();
+            services.AddIdentity<Customer, IdentityRole>().AddRoleManager<RoleManager<IdentityRole>>()
+                .AddDefaultUI().AddDefaultTokenProviders().AddEntityFrameworkStores<WebshopDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,13 +56,21 @@ namespace PC.Webshop
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "proizvodi",
+                    pattern: "proizvodi",
+                    defaults: new { controller = "Product", action = "Index" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Product}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
