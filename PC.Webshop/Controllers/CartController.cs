@@ -1,28 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PC.Webshop.DAL;
+using PC.Webshop.Model;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PC.Webshop.Web.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private WebshopDbContext dbContext;
+        UserManager<Customer> userManager;
 
-        public CartController(WebshopDbContext dbContext)
+        public CartController(WebshopDbContext dbContext, UserManager<Customer> userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index(int? id = null)
+        public IActionResult Index()
         {
-            id = 1;
-            var cart = dbContext.Carts.Include(c => c.Customer)
+            string customerId = userManager.GetUserId(User);
+
+            Cart checkCart = dbContext.Carts.Include(c => c.Customer)
+                .Where(c => c.CustomerId == customerId).FirstOrDefault();
+
+            if (checkCart == null)
+            {
+                Cart newCart = new Cart() { CustomerId = customerId };
+                dbContext.Carts.Add(newCart);
+                dbContext.SaveChanges();
+            }
+
+            Cart cart = dbContext.Carts.Include(c => c.Customer)
                 .Include(c => c.CartItems)
                 .ThenInclude(ci => ci.Product)
                 .ThenInclude(p => p.Category)
-                .Where(c => c.ID == id).FirstOrDefault();
+                .Where(c => c.CustomerId == customerId).FirstOrDefault();
+
+            ViewData["sum"] = cart.CartItems.Sum(p => p.Product.Price * p.Amount);
 
             return View("Index", cart);
         }
@@ -30,12 +49,10 @@ namespace PC.Webshop.Web.Controllers
         [ActionName(nameof(Edit))]
         public IActionResult Edit(int id)
         {
-            //var userId = userManager.GetUserId(User);
-
             var cartItem = dbContext.CartItems
                 .Include(p => p.Product)
                 .FirstOrDefault(p => p.ID == id);
-            //FillDropdownValues();
+
             return View(cartItem);
         }
 
@@ -43,21 +60,17 @@ namespace PC.Webshop.Web.Controllers
         [ActionName(nameof(Edit))]
         public async Task<IActionResult> EditPost(int id)
         {
-            //var userId = userManager.GetUserId(User);
-
             var cartItem = dbContext.CartItems
-                .Include(p => p.Product)
-                .FirstOrDefault(p => p.ID == id);
+                            .Include(p => p.Product)
+                            .FirstOrDefault(p => p.ID == id);
             var ok = await TryUpdateModelAsync(cartItem);
 
             if (ok && ModelState.IsValid)
             {
-                //product.UpdatedById = userId;
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
 
-            //FillDropdownValues();
             return View();
         }
 

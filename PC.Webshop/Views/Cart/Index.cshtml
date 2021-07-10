@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Košarica";
+    var sum = ViewData["sum"];
+
 }
 
 
@@ -24,9 +26,7 @@
             @foreach (var item in Model.CartItems)
             {
                 <tr>
-                    <td>
-                        @item.Product.Name
-                    </td>
+                    <td>@item.Product.Name</td>
                     <td>@item.Product.Brand</td>
                     <td>@item.Product.Description</td>
                     <td>@item.Product.Price kn</td>
@@ -34,14 +34,17 @@
                     <td>@item.Product.Category?.Name</td>
                     <td>@item.Amount</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">[edit]</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-route-id="@item.ID">[delete]</a>
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                     </td>
                 </tr>
             }
 
+            <tr>
+                <td colspan="3">Ukupno: @sum kn</td>
+            </tr>
         }
     </tbody>
 </table>

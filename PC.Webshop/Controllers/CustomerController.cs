@@ -1,28 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PC.Webshop.DAL;
-using System;
-using System.Collections.Generic;
+using PC.Webshop.Model;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PC.Webshop.Web.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private WebshopDbContext dbContext;
+        UserManager<Customer> userManager;
 
-        public CustomerController(WebshopDbContext dbContext)
+        public CustomerController(WebshopDbContext dbContext, UserManager<Customer> userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
 
-        //public IActionResult Index(string id = null)
-        //{
-        //    //id = 1;
-        //    //var customer = dbContext.Customers
-        //    //    .Where(c => c.ID == id).FirstOrDefault();
+        public IActionResult Index()
+        {
+            Customer customer = dbContext.Customers
+                .Where(c => c.Id == userManager.GetUserId(User)).FirstOrDefault();
 
-        //    return View("Index", customer);
-        //}
+            return View("Index", customer);
+        }
     }
 }

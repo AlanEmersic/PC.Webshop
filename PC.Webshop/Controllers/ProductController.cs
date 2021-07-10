@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PC.Webshop.DAL;
@@ -21,25 +22,27 @@ namespace PC.Webshop.Web.Controllers
 
         public IActionResult Index(string selected = null)
         {
-            ViewData["selected"] = selected;
-
+            ViewData["selected"] = selected;          
             var query = dbContext.Products.Include(c => c.Category).Where(c => c.ID > 0).AsQueryable();
             var model = query.ToList();
-            return View(nameof(Index), model);            
+
+            return View(nameof(Index), model);
         }
 
         [HttpPost]
-        public IActionResult IndexAjax(ProductFilterModel filter, string selected = null)
+        public IActionResult IndexAjax(ProductFilterModel filter)
         {
-            ViewData["selected"] = selected;
-
+            string selected = (string)ViewData["selected"];            
             var query = dbContext.Products.Include(c => c.Category).Where(c => c.ID > 0).AsQueryable();
             filter ??= new ProductFilterModel();
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
                 query = query.Where(p => p.Name.ToLower().Contains(filter.Name.ToLower()));
 
-            var model = query.ToList();                        
+            if (selected != null)
+                query = query.Where(p => p.Category.Name == selected);
+
+            var model = query.ToList();
 
             return PartialView("_IndexTable", model);
         }
@@ -53,18 +56,17 @@ namespace PC.Webshop.Web.Controllers
             return View(product);
         }
 
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             FillDropdownValues();
             return View();
         }
 
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Product model)
-        {
-            //var userId = userManager.GetUserId(User);
+        {            
             if (ModelState.IsValid)
             {
                 dbContext.Products.Add(model);
@@ -79,30 +81,25 @@ namespace PC.Webshop.Web.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin")]
         [ActionName(nameof(Edit))]
         public IActionResult Edit(int id)
         {
-            //var userId = userManager.GetUserId(User);
-
             var model = dbContext.Products.FirstOrDefault(p => p.ID == id);
             FillDropdownValues();
             return View(model);
         }
 
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ActionName(nameof(Edit))]
         public async Task<IActionResult> EditPost(int id)
         {
-            //var userId = userManager.GetUserId(User);
-
             var product = dbContext.Products.FirstOrDefault(p => p.ID == id);
             var ok = await TryUpdateModelAsync(product);
 
             if (ok && ModelState.IsValid)
-            {
-                //product.UpdatedById = userId;
+            {         
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -111,7 +108,7 @@ namespace PC.Webshop.Web.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var product = dbContext.Products.FirstOrDefault(p => p.ID == id);

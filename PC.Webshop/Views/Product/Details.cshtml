@@ -16,9 +16,9 @@
     <div class="col-md-4">
         <h4>Proizvod</h4>
         <hr />
-        <dl class="dl-horizontal">            
+        <dl class="dl-horizontal">
             <dd>
-                <img src="@Model.Img"/>
+                <img src="@Model.Img" />
             </dd>
             <dt>
                 Naziv
@@ -58,9 +58,19 @@
             </dd>
         </dl>
 
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">Uredi</a>
-        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <a asp-action="Add" asp-route-id="@Model.ID" asp-controller="CartItem" class="btn btn-success">Dodaj u košaricu</a>
+            </div>
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary mt-2">Uredi</a>
+            </div>
+        }
     </div>
 }
 else

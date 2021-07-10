@@ -20,8 +20,13 @@
                         <p class="card-text text-center"><b>@item.Price kn</b></p>
                     </div>
                 </div>
-                <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
+                }
+
             </li>
         }
         else if (selected == null)
@@ -36,8 +41,11 @@
                         <p class="card-text text-center"><b>@item.Price kn</b></p>
                     </div>
                 </div>
-                <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning mt-3 mr-3" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-danger mt-3" href="@Url.Action("Delete",new { item.ID})">Delete</a>
+                }
             </li>
         }
 
