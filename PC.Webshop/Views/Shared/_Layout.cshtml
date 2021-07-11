@@ -30,6 +30,7 @@
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="Procesor">Procesori</a>
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="Grafička kartica">Grafičke kartice</a>
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="Matična ploča">Matične ploče</a>
+                                <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="RAM">RAM</a>
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="SSD">SSD</a>
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="Napajanje">Napajanja</a>
                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-selected="Kućište">Kućišta</a>
@@ -44,7 +45,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Korisnik <i class="fas fa-user"></i></a>
                             </li>
                         }
-
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Narudžbe <i class="fas fa-shipping-fast"></i></a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

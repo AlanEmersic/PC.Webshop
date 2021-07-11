@@ -1,0 +1,30 @@
+﻿@using PC.Webshop.Model
+@model List<Order>
+
+@{
+    ViewData["Title"] = "Narudžbe";
+}
+
+
+<table style="margin-top: 20px;" class="table table-condensed" id="table">
+    <thead>
+        <tr>
+            <th>CartID</th>
+            <th>Email</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CartId</td>
+                    <td>@item.Cart.Customer.Email</td>
+                    <td>@item.OrderDate</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

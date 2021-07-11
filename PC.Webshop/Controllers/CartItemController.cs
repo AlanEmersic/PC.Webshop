@@ -47,8 +47,17 @@ namespace PC.Webshop.Web.Controllers
                 ProductId = dbContext.Products.Include(c => c.Category).Where(p => p.ID == id).FirstOrDefault().ID
             };
 
-            dbContext.CartItems.Add(cartItem);
-            dbContext.SaveChanges();
+            if (cart.CartItems.Any(ci => ci.ProductId == cartItem.ProductId))
+            {                
+                CartItem sameItem = cart.CartItems.Where(ci => ci.ProductId == cartItem.ProductId).FirstOrDefault();
+                sameItem.Amount++;
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                dbContext.CartItems.Add(cartItem);
+                dbContext.SaveChanges();
+            }
 
             return RedirectToAction("Index", "Cart");
         }

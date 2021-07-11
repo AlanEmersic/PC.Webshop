@@ -48,3 +48,11 @@
         }
     </tbody>
 </table>
+
+@if (Model.CartItems.Count != 0)
+{
+    <div>
+        <a asp-action="OrderProducts" asp-route-id="@Model.ID" asp-controller="Order" class="btn btn-success">Naruči</a>
+    </div>
+}
+
